@@ -12,7 +12,7 @@ class PcreConan(ConanFile):
     description = "pcre[1] package"
     default_options = "shared=False"
     generators = "cmake"
-    requires = "bzip2/[~=1.0.6]@lasote/stable","zlib/[~=1.2.8]@lasote/stable"
+    requires = "bzip2/[~=1.0.6]@kmaragon/stable","zlib/[~=1.2.8]@lasote/stable"
     exports = "CMakeLists.txt"
     
     options = {
@@ -45,7 +45,7 @@ class PcreConan(ConanFile):
         # cmake
         self.run('mkdir -p pkg && mkdir -p build')
         self.run('cd build && cmake %s -DCMAKE_SKIP_BUILD_RPATH=FALSE ' % cmake.command_line +
-            '-DBUILD_SHARED_LIBS=%s' % ("TRUE" if self.options.shared else "FALSE") +
+                '-DBUILD_SHARED_LIBS:BOOL=%s' % ("TRUE" if self.options.shared else "FALSE") +
             '-DCMAKE_BUILD_WITH_INSTALL_RPATH=TRUE -DCMAKE_INSTALL_RPATH="%s/lib" ' % finished_package +
             '-DCMAKE_INSTALL_PREFIX:PATH="%s" -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE -f ../' % finished_package)
 
@@ -58,10 +58,10 @@ class PcreConan(ConanFile):
         self.copy("*", dst="include", src="pkg/include")
 
     def package_info(self):
-        if self.settings.os == "Macos":
-            self.cpp_info.libs = ["libpcre.9.dylib"]
-        else:
+        if self.options.shared:
             self.cpp_info.libs = ["pcre"]
+        else:
+            self.cpp_info.libs = ["libpcre.a"]
         self.cpp_info.libdirs = ["lib"]
         self.cpp_info.includedirs = ["include"]
         self.cpp_info.bindirs = ["bin"]
