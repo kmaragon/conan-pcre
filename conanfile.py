@@ -34,7 +34,7 @@ class PcreConan(ConanFile):
         os.unlink("pcre.zip")
 
     def build(self):
-        cmake = CMake(self.settings)
+        cmake = CMake(self)
         finished_package = os.getcwd() + "/pkg"
 
         make_options = os.getenv("MAKEOPTS") or ""
