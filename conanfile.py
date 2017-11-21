@@ -28,10 +28,10 @@ class PcreConan(ConanFile):
 
     def source(self):
         version = self.version[0:self.version.rfind('.')]
-        tools.download("http://ftp.pcre.org/pub/pcre/pcre-%s.zip" % version, "pcre.zip")
+        tools.download("http://ftp.pcre.org/pub/pcre/pcre-%s.tar.gz" % version, "pcre.tar.gz")
 
-        tools.unzip("pcre.zip")
-        os.unlink("pcre.zip")
+        tools.untargz("pcre.tar.gz")
+        os.unlink("pcre.tar.gz")
 
     def build(self):
         cmake = CMake(self)
