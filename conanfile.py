@@ -12,7 +12,7 @@ class PcreConan(ConanFile):
     description = "pcre[1] package"
     default_options = "shared=False"
     generators = "cmake"
-    requires = "bzip2/[~=1.0.6]@kmaragon/stable","zlib/[~=1.2.8]@lasote/stable"
+    requires = "bzip2/[~=1.0.6]@kmaragon/stable","zlib/[~=1.2.11]@conan/stable"
     exports = "CMakeLists.txt"
     
     options = {
